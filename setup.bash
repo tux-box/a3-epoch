@@ -48,6 +48,12 @@ EpochServerDownloader(){
     cp -f /root/epoch-packages/server_install_pack/sc /epoch
     cp -f /root/epoch-packages/server_install_pack/mpmissions /epoch
     cp -f /root/epoch-packages/server_install_pack/@epochhive /epoch
+
+    #Download My conigs for ease of editiing.
+    echo https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/server.cfg > /epoch/sc/server.cfg
+    echo https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/basic.cfg > /epoch/sc/basic.cfg
+    echo https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/beserver.cfg > /epoch/sc/battleye/beserver.cfg
+    echo https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/beserver_x64.cfg > /epoch/sc/battleye/beserver_x64.cfg
 }
 
 #Let's configure things.
@@ -76,7 +82,9 @@ config-updater(){
     ## todo, update $1 to the actual file.
     config_file="$1"
     sed -e "s/hostname[ \t]=[ \t]"[^"]"/hostname="$HOSTNAME"/g" -e "s/password[ \t]=[ \t]"[^"]"/password="$PASSWORD"/g" -e "s/passwordAdmin[ \t]=[ \t]"[^"]"/passwordAdmin="$ADMIN_PASSWORD"/g" -e "s/serverCommandPassword[ \t]=[ \t]"[^"]"/serverCommandPassword="$COMMAND_PASSWORD"/g" "$config_file" > "${config_file}.tmp" && mv "${config_file}.tmp" "$config_file"
-    
+
+
+
 }
 
 #to do..
@@ -89,16 +97,11 @@ config-updater(){
     #update the server config with our enviroument varables, continued. Specfiy the full file name with path.
     config-updater "/epoch/sc/server.cfg"
 
-
-
-
-
-
-    #steam install arma3, Full or Dedicated server to /epoch
-    arma3Install
+    #steam install arma3, full or dedicated server to /epoch
+    arma3Install dedicated
 
     #steam install epoch mod from seam workshop
-    mods=("apple" "banana" "cherry")
+    mods=("apple" "banana" "cherry") #enter the workshop id's here.
     workShopModInstaller 
 
     #copy file to the correct directory.
