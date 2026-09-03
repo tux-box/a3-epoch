@@ -1,13 +1,13 @@
 ######## INSTALL ########
 
+# Set the base image
+FROM ubuntu:26.04
+
 #set some enviroument varables for the epoch configs.
 ENV HOSTNAME="DockerEpoch1"
 ENV PASSWORD=""
 ENV ADMIN_PASSWORD="AdminPassword"
 ENV COMMAND_PASSWORD="CommandPassword"
-
-# Set the base image
-FROM ubuntu:26.04
 
 # Set environment variables
 ENV USER=root
@@ -47,9 +47,9 @@ RUN mkdir --parents "$HOME/.steam" \
     && ln --symbolic "$HOME/.steam/sdk64/steamclient.so" "$HOME/.steam/sdk64/steamservice.so"
 
 #start working.
-RUN github raw directly into bash
-curl -sL https://raw.githubusercontent.com/username/repo/main/script.sh | bash
-
+#RUN github raw directly into bash
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/setup.bash | bash
+RUN curl 
 
 
 # Set default command
