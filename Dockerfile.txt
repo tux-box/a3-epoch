@@ -1,5 +1,11 @@
 ######## INSTALL ########
 
+#set some enviroument varables for the epoch configs.
+ENV HOSTNAME="DockerEpoch1"
+ENV PASSWORD=""
+ENV ADMIN_PASSWORD="AdminPassword"
+ENV COMMAND_PASSWORD="CommandPassword"
+
 # Set the base image
 FROM ubuntu:26.04
 
@@ -40,6 +46,12 @@ RUN mkdir --parents "$HOME/.steam" \
     && ln --symbolic "$HOME/.steam/sdk32/steamclient.so" "$HOME/.steam/sdk32/steamservice.so" \
     && ln --symbolic "$HOME/.steam/sdk64/steamclient.so" "$HOME/.steam/sdk64/steamservice.so"
 
+#start working.
+RUN github raw directly into bash
+curl -sL https://raw.githubusercontent.com/username/repo/main/script.sh | bash
+
+
+
 # Set default command
-ENTRYPOINT ["steamcmd"]
-CMD ["+help", "+quit"]
+#ENTRYPOINT ["steamcmd"]
+#CMD ["+help", "+quit"]
