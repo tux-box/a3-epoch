@@ -99,6 +99,6 @@ config-updater(){
 
     #steam install epoch mod from seam workshop
     mods=("apple" "banana" "cherry") #enter the workshop id's here.
-    workShopModInstaller 
+    workShopModInstaller 421839251
 
     #copy file to the correct directory.
