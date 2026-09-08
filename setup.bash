@@ -3,8 +3,8 @@
 arma3Install(){
     #steam install arma3 full, dedcated server?
     case "$1" in
-        full) echo "Installing full ARMA 3: "steamcmd +login anonymous -dir /epoch +app_install 107410 +quit;;
-        dedicated) echo "Installing dedicated server: " steamcmd +login anonymous -dir /epoch +app_install 107410 +quit;;
+        full) echo "Installing full ARMA 3: "steamcmd +login $SteamLogin -dir /epoch +app_install 107410 +quit;;
+        dedicated) echo "Installing dedicated server: " steamcmd +login $SteamLogin -dir /epoch +app_install 107410 +quit;;
         *) echo "Usage: install_arma [full|dedicated]"; exit 1;;
     esac
 }
@@ -12,7 +12,7 @@ arma3Install(){
 workShopModInstaller(){
     #import a list of mods to install
     for mods in "${mods[@]}"; do
-        steamcmd +login anonymous -dir /epoch +workshop_download_item 107410 $mod
+        steamcmd +login $SteamLogin -dir /epoch +workshop_download_item 107410 $mod
     done
 }
 
