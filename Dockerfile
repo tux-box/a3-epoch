@@ -25,7 +25,7 @@ RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386 \
     && apt-get update --quiet --quiet \
-    && apt-get install --yes --no-install-recommends ca-certificates locales steamcmd git redis-server\
+    && apt-get install --yes --no-install-recommends ca-certificates locales steamcmd git curl redis-server\
     && rm --recursive --force /var/lib/apt/lists/*
 
 # Add unicode support
@@ -51,7 +51,8 @@ RUN mkdir --parents "$HOME/.steam" \
 RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/setup.bash | bash
 RUN curl -o run-Epoch.bash https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/run-Epoch.bash
 
-CMD ["./epoch/run-Epoch.bash"]
+#CMD ["./epoch/run-Epoch.bash"]
 # Set default command
+ENTRYPOINT ["/bin/bash"]
 #ENTRYPOINT ["steamcmd"]
 #CMD ["+help", "+quit"]

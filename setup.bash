@@ -45,9 +45,9 @@ EpochServerDownloader(){
     find /root/epoch-packages -depth -exec bash -c 'f="$1"; p=$(dirname "$f"); n=$(basename "$f" | tr "A-Z" "a-z"); if [ ! -e "$p/$n" ]; then mv "$f" "$p/$n"; fi' _ {} \;
 
     #copy all the files to the correct place.
-    cp -f /root/epoch-packages/server_install_pack/sc /epoch
-    cp -f /root/epoch-packages/server_install_pack/mpmissions /epoch
-    cp -f /root/epoch-packages/server_install_pack/@epochhive /epoch
+    cp -r -f /root/epoch-packages/server_install_pack/sc /epoch/
+    cp -r -f /root/epoch-packages/server_install_pack/mpmissions /epoch/
+    cp -r -f /root/epoch-packages/server_install_pack/@epochhive /epoch/
 
     #Download My conigs for ease of editiing.
     echo https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/server.cfg > /epoch/sc/server.cfg
