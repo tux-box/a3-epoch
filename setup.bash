@@ -18,7 +18,13 @@ EpochServerDownloader(){
     mkdir /root/epoch-packages
 
     #create a directory for the actual server files.
-    #mkdir /epoch
+    if [[ ! -d "/epoch" ]]; then
+        mkdir -p "mkdir /epoch"
+        echo "Directory created"
+    else
+        echo "Directory already exists"
+    fi
+    
 
     #cd /root/epoch-packages
 
