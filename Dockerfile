@@ -7,8 +7,13 @@ FROM ubuntu:26.04
 ENV USER=root
 ENV HOME=/root
 
+#set install features to noninteractive.
+ARG DEBIAN_FRONTEND=noninteractive
+
 # Set working directory
 WORKDIR $HOME
+
+RUN apt-get update --quiet --quiet && apt-get install --yes --no-install-recommends git curl && rm --recursive --force /var/lib/apt/lists/*
 
 #install Steamcmd
 RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/install-steamcmd.bash | bash
