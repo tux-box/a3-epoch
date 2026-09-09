@@ -48,7 +48,7 @@ RUN mkdir --parents "$HOME/.steam" \
 
 #start working.
 #RUN github raw directly into bash
-#RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/setup.bash | bash
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/setup.bash | bash
 #RUN curl -o run-Epoch.bash https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/run-Epoch.bash
 
 #CMD ["./epoch/run-Epoch.bash"]
