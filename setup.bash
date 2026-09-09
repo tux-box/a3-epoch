@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail  
 
 RedisSetup(){
     #setup Redis
@@ -19,7 +20,7 @@ EpochServerDownloader(){
 
     #create a directory for the actual server files.
     if [[ ! -d "/epoch" ]]; then
-        mkdir -p "mkdir /epoch"
+        mkdir -p /epoch
         echo "Directory created"
     else
         echo "Directory already exists"
