@@ -8,7 +8,7 @@ RedisSetup(){
     cp /etc/redis/redis.conf /etc/redis/redis.conf.org
 
     #Replace the information in the redis file with our own information.
-    echo "https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/redis.conf" > /etc/redis/redis.conf
+    curl "https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/redis.conf" > /etc/redis/redis.conf
 
 }
 
@@ -33,7 +33,17 @@ EpochServerDownloader(){
     git clone https://github.com/tux-box/Epoch.git /root/epoch-packages
 
     #Make all the files and folders lowercase for linux capatablity.
-    find /root/epoch-packages -depth -exec bash -c 'f="$1"; p=$(dirname "$f"); n=$(basename "$f" | tr "A-Z" "a-z"); if [ ! -e "$p/$n" ]; then mv "$f" "$p/$n"; fi' _ {} \;
+    #find /root/epoch-packages -depth -exec bash -c 'f="$1"; p=$(dirname "$f"); n=$(basename "$f" | tr "A-Z" "a-z"); if [ ! -e "$p/$n" ]; then mv "$f" "$p/$n"; fi' _ {} \;
+
+    find /root/epoch-packages -depth -exec bash -c '
+        for path; do
+            lower=$(dirname "$path")/$(basename "$path" | tr "[:upper:]" "[:lower:]")
+            if [[ "$path" != "$lower" ]]; then
+                mv "$path" "$lower"
+            fi
+        done
+    ' bash {} +
+
 
     #copy all the files to the correct place.
     cp -r -f /root/epoch-packages/server_install_pack/sc /epoch/sc
