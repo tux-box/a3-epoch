@@ -13,6 +13,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Set working directory
 WORKDIR $HOME
 
+RUN mkdir -p /root/epoch-packages
+RUN mkdir -p /epoch
+
+
 RUN apt-get update --quiet --quiet && apt-get install --yes --no-install-recommends git curl && rm --recursive --force /var/lib/apt/lists/*
 
 #install Steamcmd
