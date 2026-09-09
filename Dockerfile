@@ -3,12 +3,6 @@
 # Set the base image
 FROM ubuntu:26.04
 
-#set some enviroument varables for the epoch configs.
-ENV HOSTNAME="DockerEpoch1"
-ENV PASSWORD=""
-ENV ADMIN_PASSWORD="AdminPassword"
-ENV COMMAND_PASSWORD="CommandPassword"
-
 # Set environment variables
 ENV USER=root
 ENV HOME=/root
@@ -16,43 +10,31 @@ ENV HOME=/root
 # Set working directory
 WORKDIR $HOME
 
-# Insert Steam prompt answers
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
-    && echo steam steam/license note '' | debconf-set-selections
+#install Steamcmd
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/install-steamcmd.bash | bash
 
-# Update the repository and install SteamCMD
-ARG DEBIAN_FRONTEND=noninteractive
-RUN dpkg --add-architecture i386 \
-    && apt-get update --quiet --quiet \
-    && apt-get install --yes --no-install-recommends ca-certificates locales steamcmd git curl redis-server\
-    && rm --recursive --force /var/lib/apt/lists/*
+#install addional softwares
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/install-softwares.bash | bash
 
-# Add unicode support
-RUN locale-gen en_US.UTF-8
-ENV LANG='en_US.UTF-8'
-ENV LANGUAGE='en_US:en'
+#configure redis
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/configure-redis.bash | bash
 
-# Create symlink for executable
-RUN ln --symbolic /usr/games/steamcmd /usr/bin/steamcmd
+#download epoch server
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/install-epochServer.bash | bash
 
-# Update SteamCMD and verify latest version
-RUN steamcmd +quit
+#configure epoch server
+RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/configure-epochServer.bash | bash
 
-# Fix missing directories and libraries
-RUN mkdir --parents "$HOME/.steam" \
-    && ln --symbolic "$HOME/.local/share/Steam/steamcmd/linux32" "$HOME/.steam/sdk32" \
-    && ln --symbolic "$HOME/.local/share/Steam/steamcmd/linux64" "$HOME/.steam/sdk64" \
-    && ln --symbolic "$HOME/.steam/sdk32/steamclient.so" "$HOME/.steam/sdk32/steamservice.so" \
-    && ln --symbolic "$HOME/.steam/sdk64/steamclient.so" "$HOME/.steam/sdk64/steamservice.so"
+#copy run script to location
+RUN curl https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/run-Epoch.bash > /epoch/run-Epoch.bash
 
-#start working.
-#RUN github raw directly into bash
-RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/setup.bash | bash
+#requires Steam Logins
+CMD curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/post-build-work.bash | bash
+
 #RUN curl -o run-Epoch.bash https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/run-Epoch.bash
 
-#CMD ["./epoch/run-Epoch.bash"]
+#CMD ["/epoch/run-Epoch.bash"]
 # Set default command
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/epoch/run-Epoch.bash"]
 #ENTRYPOINT ["steamcmd"]
 #CMD ["+help", "+quit"]
