@@ -60,10 +60,8 @@ EpochServerDownloader(){
 config-updater(){
     #Let's configure things.
     #update config's with enviroument varables. 
-    set -euo pipefail
     REQUIRED_VARS=(
         HOSTNAME
-        PASSWORD
         ADMIN_PASSWORD
         COMMAND_PASSWORD
     )
