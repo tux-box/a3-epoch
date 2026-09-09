@@ -17,7 +17,7 @@ RUN mkdir -p /root/epoch-packages
 RUN mkdir -p /epoch
 
 
-RUN apt-get update --quiet --quiet && apt-get install --yes --no-install-recommends git curl && rm --recursive --force /var/lib/apt/lists/*
+RUN apt-get update --quiet --quiet && apt-get install --yes --no-install-recommends ca-certificates locales git curl && rm --recursive --force /var/lib/apt/lists/*
 
 #install Steamcmd
 RUN curl -sL https://raw.githubusercontent.com/tux-box/a3-epoch/refs/heads/main/install-steamcmd.bash | bash

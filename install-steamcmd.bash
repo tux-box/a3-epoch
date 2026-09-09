@@ -6,7 +6,7 @@ echo steam steam/question select "I AGREE" | debconf-set-selections && echo stea
 ARG DEBIAN_FRONTEND=noninteractive
 dpkg --add-architecture i386 \
     && apt-get update --quiet --quiet \
-    && apt-get install --yes --no-install-recommends ca-certificates locales steamcmd \
+    && apt-get install --yes --no-install-recommends steamcmd \
     && rm --recursive --force /var/lib/apt/lists/*
 
 # Add unicode support
